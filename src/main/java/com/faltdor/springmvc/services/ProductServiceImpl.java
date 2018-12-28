@@ -3,10 +3,9 @@ package com.faltdor.springmvc.services;
 import com.faltdor.springmvc.domain.Product;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ValidationException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -40,5 +39,22 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getProductById(long id) {
         return this.products.get(id);
+    }
+
+    @Override
+    public Product saveOrUpdate(Product product) {
+        return Optional.ofNullable(product)
+                .filter(Objects::nonNull)
+                .map(p -> {
+                    if (p.getId() == null){
+                        p.setId(getNextId());
+                    }
+                    products.put(p.getId(), p);
+                    return p;
+                }).orElseThrow(ValidationException::new);
+    }
+
+    private synchronized Long getNextId() {
+        return Long.valueOf(this.products.size() + 1);
     }
 }
