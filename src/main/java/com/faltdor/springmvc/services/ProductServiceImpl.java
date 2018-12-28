@@ -54,6 +54,11 @@ public class ProductServiceImpl implements ProductService {
                 }).orElseThrow(ValidationException::new);
     }
 
+    @Override
+    public void deleteProductById(long id) {
+        this.products.remove(id);
+    }
+
     private synchronized Long getNextId() {
         return Long.valueOf(this.products.size() + 1);
     }

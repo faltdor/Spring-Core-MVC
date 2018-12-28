@@ -52,4 +52,10 @@ public class ProductController {
         return "productform";
     }
 
+    @RequestMapping("/product/delete/{id}")
+    public String editProduct(@PathVariable long id){
+        this.productService.deleteProductById(id);
+        return "redirect:/products";
+    }
+
 }
