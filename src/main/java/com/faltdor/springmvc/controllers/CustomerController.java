@@ -2,7 +2,6 @@ package com.faltdor.springmvc.controllers;
 
 import com.faltdor.springmvc.domain.Customer;
 import com.faltdor.springmvc.services.CustomerService;
-import com.faltdor.springmvc.services.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+@RequestMapping("/customer")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -18,44 +18,42 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @RequestMapping("/customers")
+    @RequestMapping({"/list", "/"})
     public String listCustomer(Model model){
 
-        model.addAttribute("customers", this.customerService.getAllCustomers());
+        model.addAttribute("customers", this.customerService.listAll());
 
         return "customers";
     }
 
-    @RequestMapping("/customer/{id}")
-    public String getCustomerById(@PathVariable long id, Model model){
-
-        model.addAttribute("customer", this.customerService.getCustomerById(id));
-
+    @RequestMapping("/show/{id}")
+    public String showCustomer(@PathVariable long id, Model model){
+        model.addAttribute("customer", this.customerService.getById(id));
         return "customer";
     }
 
-    @RequestMapping("/customer/new")
+    @RequestMapping("/new")
     public String createCustomer(Model model){
         model.addAttribute("customer", new Customer());
         return "customerform";
     }
 
-    @RequestMapping(value = "/customer", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String createUpdateCustomer(Customer customer){
 
         this.customerService.saveOrUpdate(customer);
-        return "redirect:/customers";
+        return "redirect:/customer/list";
     }
 
-    @RequestMapping("/customer/edit/{id}")
+    @RequestMapping("/edit/{id}")
     public String editCustomer(@PathVariable long id, Model model){
-        model.addAttribute("customer", this.customerService.getCustomerById(id));
+        model.addAttribute("customer", this.customerService.getById(id));
         return "customerform";
     }
 
-    @RequestMapping("/customer/delete/{id}")
+    @RequestMapping("/delete/{id}")
     public String deleteCustomer(@PathVariable long id){
-        this.customerService.deleteCustomerById(id);
-        return "redirect:/customers";
+        this.customerService.delete(id);
+        return "redirect:/customer/list";
     }
 }

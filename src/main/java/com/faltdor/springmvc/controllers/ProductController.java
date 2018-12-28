@@ -20,7 +20,7 @@ public class ProductController {
     @RequestMapping("/products")
     public String listProducts(Model model){
 
-        model.addAttribute("products", this.productService.getAllProducts());
+        model.addAttribute("products", this.productService.listAll());
 
         return "products";
     }
@@ -28,7 +28,7 @@ public class ProductController {
     @RequestMapping("/product/{id}")
     public String getProductById(@PathVariable long id, Model model){
 
-        model.addAttribute("product", this.productService.getProductById(id));
+        model.addAttribute("product", this.productService.getById(id));
 
         return "product";
     }
@@ -48,13 +48,13 @@ public class ProductController {
 
     @RequestMapping("/product/edit/{id}")
     public String editProduct(@PathVariable long id, Model model){
-        model.addAttribute("product", this.productService.getProductById(id));
+        model.addAttribute("product", this.productService.getById(id));
         return "productform";
     }
 
     @RequestMapping("/product/delete/{id}")
     public String deleteProduct(@PathVariable long id){
-        this.productService.deleteProductById(id);
+        this.productService.delete(id);
         return "redirect:/products";
     }
 

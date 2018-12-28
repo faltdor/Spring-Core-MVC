@@ -1,24 +1,34 @@
 package com.faltdor.springmvc.services;
 
 import com.faltdor.springmvc.domain.Customer;
+import com.faltdor.springmvc.domain.DomainObject;
 import org.springframework.stereotype.Service;
 
-import javax.validation.ValidationException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
-public class CustomerServiceImpl implements CustomerService {
+public class CustomerServiceImpl extends  AbstractMapService implements CustomerService {
 
-    private Map<Long, Customer> customers;
-
-    public CustomerServiceImpl() {
-        loadCustomers();
+    @Override
+    public List<DomainObject> listAll() {
+        return super.listAll();
     }
 
-    private void loadCustomers() {
-        this.customers = IntStream.range(1, 10)
+    @Override
+    public Customer getById(Long id) {
+        return (Customer)super.getById(id);
+    }
+
+    @Override
+    public void delete(Long id) {
+        super.delete(id);
+    }
+
+    @Override
+    protected void loadDomainObjects() {
+        domainObjectMap = IntStream.range(1, 10)
                 .mapToObj(index -> {
                     Customer customer = new Customer();
                     customer.setId(Long.valueOf(index));
@@ -31,40 +41,12 @@ public class CustomerServiceImpl implements CustomerService {
                     customer.setPhoneNumber(" 11111111111 " + index);
                     customer.setState("TO " + index);
                     customer.setZipCode(" MNJM" + index);
-                  return customer;
+                    return customer;
                 }).collect(Collectors.toMap(Customer::getId, customer -> customer));
-
     }
 
     @Override
-    public List<Customer> getAllCustomers() {
-        return new ArrayList<>(this.customers.values());
-    }
-
-    @Override
-    public Customer getCustomerById(long id) {
-        return this.customers.get(id);
-    }
-
-    @Override
-    public Customer saveOrUpdate(Customer customer) {
-        return Optional.ofNullable(customer)
-                .filter(Objects::nonNull)
-                .map(p -> {
-                    if (p.getId() == null){
-                        p.setId(getNextId());
-                    }
-                    customers.put(p.getId(), p);
-                    return p;
-                }).orElseThrow(ValidationException::new);
-    }
-
-    @Override
-    public void deleteCustomerById(long id) {
-        this.customers.remove(id);
-    }
-
-    private synchronized Long getNextId() {
-        return Long.valueOf(this.customers.size() + 1);
+    public Customer saveOrUpdate(Customer domainObject) {
+        return (Customer)super.saveOrUpdate(domainObject);
     }
 }

@@ -5,13 +5,6 @@ import com.faltdor.springmvc.domain.Product;
 
 import java.util.List;
 
-public interface CustomerService {
+public interface CustomerService extends CrudService<Customer> {
 
-    List<Customer>  getAllCustomers();
-
-    Customer getCustomerById(long id);
-
-    Customer saveOrUpdate(Customer customer);
-
-    void deleteCustomerById(long id);
 }
