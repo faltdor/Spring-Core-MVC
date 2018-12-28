@@ -46,4 +46,10 @@ public class ProductController {
         return "redirect:/products";
     }
 
+    @RequestMapping("/product/edit/{id}")
+    public String editProduct(@PathVariable long id, Model model){
+        model.addAttribute("product", this.productService.getProductById(id));
+        return "productform";
+    }
+
 }
