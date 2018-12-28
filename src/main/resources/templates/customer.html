@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen" />
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/3.1.1/jquery.min.js"
+            th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+
+    <link href="../static/css/spring-core.css"
+          th:href="@{css/spring-core.css}" rel="stylesheet" media="screen"/>
+    <title>Product</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <h2>Show Product</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Customer Id:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static" th:text="${customer.id}"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">First Name:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static" th:text="${customer.firstName}"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Last Name:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static" th:text="${customer.lastName}"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Email:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static" th:text="${customer.email}"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Phone Number:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static" th:text="${customer.phoneNumber}"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Address Line One:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static" th:text="${customer.addressLineOne}"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Address Line Two:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static" th:text="${customer.addressLineTwo}"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">City:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static" th:text="${customer.city}"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    <label class="col-sm-4 control-label">State:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static" th:text="${customer.state}"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Zip Code:</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static" th:text="${customer.zipCode}" ></p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

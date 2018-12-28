@@ -53,7 +53,7 @@ public class ProductController {
     }
 
     @RequestMapping("/product/delete/{id}")
-    public String editProduct(@PathVariable long id){
+    public String deleteProduct(@PathVariable long id){
         this.productService.deleteProductById(id);
         return "redirect:/products";
     }
