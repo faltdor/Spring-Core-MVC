@@ -17,7 +17,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @RequestMapping("/products")
+    @RequestMapping("/product/list")
     public String listProducts(Model model){
 
         model.addAttribute("products", this.productService.listAll());
@@ -43,7 +43,7 @@ public class ProductController {
     public String createUpdateProduct(Product product){
 
         this.productService.saveOrUpdate(product);
-        return "redirect:/products";
+        return "redirect:/product/list";
     }
 
     @RequestMapping("/product/edit/{id}")
@@ -55,7 +55,7 @@ public class ProductController {
     @RequestMapping("/product/delete/{id}")
     public String deleteProduct(@PathVariable long id){
         this.productService.delete(id);
-        return "redirect:/products";
+        return "redirect:/product/list";
     }
 
 }
