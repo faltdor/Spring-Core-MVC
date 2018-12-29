@@ -20,9 +20,7 @@ public class CustomerController {
 
     @RequestMapping({"/list", "/"})
     public String listCustomer(Model model){
-
         model.addAttribute("customers", this.customerService.listAll());
-
         return "customers";
     }
 
