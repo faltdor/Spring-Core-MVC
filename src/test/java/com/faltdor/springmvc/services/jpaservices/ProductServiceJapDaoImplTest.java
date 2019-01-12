@@ -1,7 +1,8 @@
-package com.faltdor.springmvc.services;
+package com.faltdor.springmvc.services.jpaservices;
 
 import com.faltdor.springmvc.config.JpaIntegrationConfig;
 import com.faltdor.springmvc.domain.Product;
+import com.faltdor.springmvc.services.ProductService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

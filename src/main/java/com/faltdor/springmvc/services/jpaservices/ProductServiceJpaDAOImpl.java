@@ -1,6 +1,7 @@
-package com.faltdor.springmvc.services;
+package com.faltdor.springmvc.services.jpaservices;
 
 import com.faltdor.springmvc.domain.Product;
+import com.faltdor.springmvc.services.ProductService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 

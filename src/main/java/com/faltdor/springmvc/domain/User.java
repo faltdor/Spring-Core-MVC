@@ -20,6 +20,10 @@ public class User implements DomainObject{
     private String encryptedPassword;
     private Boolean enabled = true;
 
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Customer customer;
+
+
     public Integer getVersion() {
         return version;
     }
@@ -68,5 +72,14 @@ public class User implements DomainObject{
     @Override
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+        this.customer.setUser(this);
     }
 }
