@@ -1,4 +1,4 @@
-package com.faltdor.springmvc.services;
+package com.faltdor.springmvc.services.mapservices;
 
 import com.faltdor.springmvc.domain.DomainObject;
 

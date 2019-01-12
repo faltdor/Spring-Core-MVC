@@ -1,7 +1,10 @@
-package com.faltdor.springmvc.services;
+package com.faltdor.springmvc.services.mapservices;
 
 import com.faltdor.springmvc.domain.Customer;
 import com.faltdor.springmvc.domain.DomainObject;
+import com.faltdor.springmvc.services.CustomerService;
+import com.faltdor.springmvc.services.mapservices.AbstractMapService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -9,7 +12,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
-public class CustomerServiceImpl extends  AbstractMapService implements CustomerService {
+@Profile("map")
+public class CustomerServiceImpl extends AbstractMapService implements CustomerService {
 
     @Override
     public List<DomainObject> listAll() {
