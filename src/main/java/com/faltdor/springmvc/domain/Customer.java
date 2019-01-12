@@ -13,11 +13,12 @@ public class Customer implements DomainObject{
     private String lastName;
     private String email;
     private String phoneNumber;
-    private String addressLineOne;
-    private String addressLineTwo;
-    private String city;
-    private String state;
-    private String zipCode;
+
+    @Embedded
+    private Address billingAddress;
+
+    @Embedded
+    private Address shippingAddress;
 
     @OneToOne(cascade = CascadeType.ALL)
     private User user;
@@ -26,6 +27,7 @@ public class Customer implements DomainObject{
     public Long getId() {
         return id;
     }
+
     @Override
     public void setId(Long id) {
         this.id = id;
@@ -71,51 +73,27 @@ public class Customer implements DomainObject{
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAddressLineOne() {
-        return addressLineOne;
-    }
-
-    public void setAddressLineOne(String addressLineOne) {
-        this.addressLineOne = addressLineOne;
-    }
-
-    public String getAddressLineTwo() {
-        return addressLineTwo;
-    }
-
-    public void setAddressLineTwo(String addressLineTwo) {
-        this.addressLineTwo = addressLineTwo;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Address getBillingAddress() {
+        return billingAddress;
+    }
+
+    public void setBillingAddress(Address billingAddress) {
+        this.billingAddress = billingAddress;
+    }
+
+    public Address getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(Address shippingAddress) {
+        this.shippingAddress = shippingAddress;
     }
 }

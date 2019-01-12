@@ -1,5 +1,6 @@
 package com.faltdor.springmvc.services.mapservices;
 
+import com.faltdor.springmvc.domain.Address;
 import com.faltdor.springmvc.domain.Customer;
 import com.faltdor.springmvc.domain.DomainObject;
 import com.faltdor.springmvc.services.CustomerService;
@@ -36,15 +37,18 @@ public class CustomerServiceImpl extends AbstractMapService implements CustomerS
                 .mapToObj(index -> {
                     Customer customer = new Customer();
                     customer.setId(Long.valueOf(index));
-                    customer.setAddressLineOne("Address Line " + index);
-                    customer.setAddressLineTwo("Address two " + index);
-                    customer.setCity("City" + index);
+                    Address address = new Address();
+                    address.setAddressLine1("Address Line " + index);
+                    address.setAddressLine2("Address two " + index);
+                    address.setCity("City" + index);
                     customer.setEmail("email " + index + "@email.com");
                     customer.setFirstName("First Name " + index);
                     customer.setLastName("Last Name " + index);
                     customer.setPhoneNumber(" 11111111111 " + index);
-                    customer.setState("TO " + index);
-                    customer.setZipCode(" MNJM" + index);
+                    address.setState("TO " + index);
+                    address.setZipCode(" MNJM" + index);
+                    customer.setBillingAddress(address);
+                    customer.setShippingAddress(address);
                     return customer;
                 }).collect(Collectors.toMap(Customer::getId, customer -> customer));
     }

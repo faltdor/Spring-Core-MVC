@@ -1,5 +1,6 @@
 package com.faltdor.springmvc.controllers;
 
+import com.faltdor.springmvc.domain.Address;
 import com.faltdor.springmvc.domain.Customer;
 import com.faltdor.springmvc.services.CustomerService;
 import org.junit.Before;
@@ -70,67 +71,71 @@ public class CustomerControllerTest {
     @Test
     public void createUpdateCustomer() throws Exception {
         int index = 9999;
-        Customer customer = new Customer();
+        Long id = 1L;
+        Customer returnCustomer = new Customer();
+        String firstName = "Micheal";
+        String lastName = "Weston";
+        String addressLine1 = "1 Main St";
+        String addressLine2 = "Apt 301";
+        String city = "Miami";
+        String state = "Florida";
+        String zipCode = "33101";
+        String email = "micheal@burnnotice.com";
+        String phoneNumber = "305.333.0101";
 
-        Long id = Long.valueOf(1);
-        customer.setId(id);
-        String addressLineOne = "Address Line " + index;
-        customer.setAddressLineOne(addressLineOne);
-        String addressLineTwo = "Address two " + index;
-        customer.setAddressLineTwo(addressLineTwo);
-        String city = "City" + index;
-        customer.setCity(city);
-        String email = "email " + index + "@email.com";
-        customer.setEmail(email);
-        String firstName = "First Name " + index;
-        customer.setFirstName(firstName);
-        String lastName = "Last Name " + index;
-        customer.setLastName(lastName);
-        String phoneNumber = "11111111111 " + index;
-        customer.setPhoneNumber(phoneNumber);
-        String state = "TO " + index;
-        customer.setState(state);
-        String zipCode = " MNJM" + index;
-        customer.setZipCode(zipCode);
+        returnCustomer.setId(id);
+        returnCustomer.setFirstName(firstName);
+        returnCustomer.setLastName(lastName);
+        returnCustomer.setBillingAddress(new Address());
+        returnCustomer.getBillingAddress().setAddressLine1(addressLine1);
+        returnCustomer.getBillingAddress().setAddressLine2(addressLine2);
+        returnCustomer.getBillingAddress().setCity(city);
+        returnCustomer.getBillingAddress().setState(state);
+        returnCustomer.getBillingAddress().setZipCode(zipCode);
+        returnCustomer.setEmail(email);
+        returnCustomer.setPhoneNumber(phoneNumber);
 
-        Mockito.when(customerService.saveOrUpdate(Mockito.any(Customer.class))).thenReturn(customer);
+        Mockito.when(customerService.saveOrUpdate(Matchers.<Customer>any())).thenReturn(returnCustomer);
+
         mockMvc.perform(post("/customer")
                 .param("id", "1")
-                .param("addressLineOne", addressLineOne)
-                .param("addressLineTwo", addressLineTwo)
-                .param("city", city)
-                .param("email", email)
                 .param("firstName", firstName)
                 .param("lastName", lastName)
-                .param("phoneNumber", phoneNumber)
+                .param("addressLine1", addressLine1)
+                .param("addressLine2", addressLine2)
+                .param("city", city)
                 .param("state", state)
-                .param("zipCode", zipCode))
+                .param("zipCode", zipCode)
+                .param("email", email)
+                .param("phoneNumber", phoneNumber))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/customer/list"))
+                .andExpect(view().name("redirect:customer/show/1"))
                 .andExpect(model().attribute("customer", instanceOf(Customer.class)))
-                .andExpect(model().attribute("customer", hasProperty("id", is(id))))
-                .andExpect(model().attribute("customer", hasProperty("addressLineOne", is(addressLineOne))))
-                .andExpect(model().attribute("customer", hasProperty("addressLineTwo", is(addressLineTwo))))
-                .andExpect(model().attribute("customer", hasProperty("email", is(email))))
                 .andExpect(model().attribute("customer", hasProperty("firstName", is(firstName))))
                 .andExpect(model().attribute("customer", hasProperty("lastName", is(lastName))))
-                .andExpect(model().attribute("customer", hasProperty("phoneNumber", is(phoneNumber))))
+                .andExpect(model().attribute("customer", hasProperty("addressLine1", is(addressLine1))))
+                .andExpect(model().attribute("customer", hasProperty("addressLine2", is(addressLine2))))
+                .andExpect(model().attribute("customer", hasProperty("city", is(city))))
                 .andExpect(model().attribute("customer", hasProperty("state", is(state))))
-                .andExpect(model().attribute("customer", hasProperty("zipCode", is(zipCode))));
+                .andExpect(model().attribute("customer", hasProperty("zipCode", is(zipCode))))
+                .andExpect(model().attribute("customer", hasProperty("email", is(email))))
+                .andExpect(model().attribute("customer", hasProperty("phoneNumber", is(phoneNumber))));
 
-        //verify properties of bound object
-        ArgumentCaptor<Customer> boundProduct = ArgumentCaptor.forClass(Customer.class);
-        verify(customerService).saveOrUpdate(boundProduct.capture());
+        ArgumentCaptor<Customer> customerCaptor = ArgumentCaptor.forClass(Customer.class);
+        verify(customerService).saveOrUpdate(customerCaptor.capture());
 
-        assertEquals(id, boundProduct.getValue().getId());
-        assertEquals(addressLineOne, boundProduct.getValue().getAddressLineOne());
-        assertEquals(addressLineTwo, boundProduct.getValue().getAddressLineTwo());
-        assertEquals(email, boundProduct.getValue().getEmail());
-        assertEquals(firstName, boundProduct.getValue().getFirstName());
-        assertEquals(lastName, boundProduct.getValue().getLastName());
-        assertEquals(phoneNumber, boundProduct.getValue().getPhoneNumber());
-        assertEquals(state, boundProduct.getValue().getState());
-        assertEquals(zipCode, boundProduct.getValue().getZipCode());
+        Customer boundCustomer = customerCaptor.getValue();
+
+        assertEquals(id, boundCustomer.getId());
+        assertEquals(firstName, boundCustomer.getFirstName());
+        assertEquals(lastName, boundCustomer.getLastName());
+        assertEquals(addressLine1, boundCustomer.getBillingAddress().getAddressLine1());
+        assertEquals(addressLine2, boundCustomer.getBillingAddress().getAddressLine2());
+        assertEquals(city, boundCustomer.getBillingAddress().getCity());
+        assertEquals(state, boundCustomer.getBillingAddress().getState());
+        assertEquals(zipCode, boundCustomer.getBillingAddress().getZipCode());
+        assertEquals(email, boundCustomer.getEmail());
+        assertEquals(phoneNumber, boundCustomer.getPhoneNumber());
     }
 
     @Test
