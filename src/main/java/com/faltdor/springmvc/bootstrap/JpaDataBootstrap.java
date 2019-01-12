@@ -37,7 +37,8 @@ public class JpaDataBootstrap implements ApplicationListener<ContextRefreshedEve
                     product.setPrice(new BigDecimal(index * 9876));
                     product.setImageUrl("http://product/" + index);
                     return product;
-                }).map(productService::saveOrUpdate)
+                })
+                //.map(productService::saveOrUpdate)
                 .collect(Collectors.toList());
 
     }
@@ -57,7 +58,8 @@ public class JpaDataBootstrap implements ApplicationListener<ContextRefreshedEve
                     customer.setState("TO " + index);
                     customer.setZipCode(" MNJM" + index);
                     return customer;
-                }).map(customerService::saveOrUpdate)
+                })
+                //.map(customerService::saveOrUpdate)
                 .collect(Collectors.toMap(Customer::getId, customer -> customer));
 
     }
